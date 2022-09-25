@@ -1,1 +1,0 @@
-yegor@Yegors-MacBook-Pro.local.21530
