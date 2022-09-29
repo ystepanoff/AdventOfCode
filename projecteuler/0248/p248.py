@@ -14,7 +14,7 @@ def gen(n, phi, p_i):
         p = PRIMES[j]
         pp = p
         phi_new = phi * (p - 1)
-        while phi_new <= M and M % phi_new == 0:
+        while M % phi_new == 0:
             gen(n * pp, phi_new, j + 1)
             pp *= p
             phi_new *= p
