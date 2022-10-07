@@ -19,12 +19,12 @@ def S(n: int, x1: float) -> float:
     return s * 4
 
 
-n = int(input())
+N = 400
 l, r = 0, 1.0
 while r - l > 1e-12:
     m = (l + r) / 2
-    if S(n // 2, m) == float('inf'):
+    if S(N // 2, m) == float('inf'):
         r = m
     else:
         l = m
-print("{:.10f}".format(S(n // 2, l)))
+print("{:.10f}".format(S(N // 2, l)))
