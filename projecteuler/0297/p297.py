@@ -1,6 +1,6 @@
 from bisect import bisect
 
-N = 10 ** 50
+N = 10 ** 17
 FIB = [1, 2]
 while FIB[-1] + FIB[-2] < N:
     FIB.append(FIB[-1] + FIB[-2])
