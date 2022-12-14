@@ -4,5 +4,5 @@ for i, c in enumerate(open('input').read()):
         marker = marker[1:]
     marker += c
     if len(set(marker)) == 4:
-        print(i + 1)
+        print(i + 1)`
         break
