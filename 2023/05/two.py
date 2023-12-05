@@ -14,12 +14,6 @@ class Function:
         lines = section_str.split('\n')[1:]
         self.tuples = [[int(x) for x in line.split()] for line in lines]
 
-    def apply_one(self, x: int) -> int:
-        for (dst, src, sz) in self.tuples:
-            if src <= x < src + sz:
-                return x + dst - src
-        return x
-
     def apply_range(self, range_list):
         new_ranges = []
         for (dest, src, sz) in self.tuples:
