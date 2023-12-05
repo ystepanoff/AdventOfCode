@@ -1,6 +1,5 @@
 import sys
 
-# Read input from standard input
 input_data = sys.stdin.read().strip()
 input_lines = input_data.split('\n')
 
