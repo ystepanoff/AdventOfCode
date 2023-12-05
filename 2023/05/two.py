@@ -1,17 +1,17 @@
 import sys
-import re
-from collections import defaultdict
 
-D = sys.stdin.read().strip()
-L = D.split('\n')
+# Read input from standard input
+input_data = sys.stdin.read().strip()
+input_lines = input_data.split('\n')
 
-parts = D.split('\n\n')
-seed, *others = parts
+sections = input_data.split('\n\n')
+
+seed, *other_sections = sections
 seed = [int(x) for x in seed.split(':')[-1].split()]
 
 class Function:
-    def __init__(self, S):
-        lines = S.split('\n')[1:]
+    def __init__(self, section_str):
+        lines = section_str.split('\n')[1:]
         self.tuples = [[int(x) for x in line.split()] for line in lines]
 
     def apply_one(self, x: int) -> int:
@@ -20,39 +20,32 @@ class Function:
                 return x + dst - src
         return x
 
-    def apply_range(self, R):
-        A = []
+    def apply_range(self, range_list):
+        new_ranges = []
         for (dest, src, sz) in self.tuples:
             src_end = src + sz
-            NR = []
-            while R:
-                (st, ed) = R.pop()
+            next_ranges = []
+            while range_list:
+                (st, ed) = range_list.pop()
                 before = (st, min(ed, src))
                 inter = (max(st, src), min(src_end, ed))
                 after = (max(src_end, st), ed)
                 if before[1] > before[0]:
-                    NR.append(before)
+                    next_ranges.append(before)
                 if inter[1] > inter[0]:
-                    A.append((inter[0] - src + dest, inter[1] - src + dest))
+                    new_ranges.append((inter[0] - src + dest, inter[1] - src + dest))
                 if after[1] > after[0]:
-                    NR.append(after)
-            R = NR
-        return A + R
+                    next_ranges.append(after)
+            range_list = next_ranges
+        return new_ranges + range_list
 
-Fs = [Function(s) for s in others]
+functions = [Function(section) for section in other_sections]
 
-P1 = []
-for x in seed:
-    for f in Fs:
-        x = f.apply_one(x)
-    P1.append(x)
-print(min(P1))
-
-P2 = []
+result = []
 pairs = list(zip(seed[::2], seed[1::2]))
-for st, sz in pairs:
-    R = [(st, st + sz)]
-    for f in Fs:
-        R = f.apply_range(R)
-    P2.append(min(R)[0])
-print(min(P2))
+for start, size in pairs:
+    current_range = [(start, start + size)]
+    for func in functions:
+        current_range = func.apply_range(current_range)
+    result.append(min(current_range)[0])
+print(min(result))
