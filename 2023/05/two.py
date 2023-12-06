@@ -1,44 +1,48 @@
+from collections import defaultdict
 import sys
 
-input_data = sys.stdin.read().strip()
-input_lines = input_data.split('\n')
+seeds = []
+order = []
+all_rules = defaultdict(list)
 
-sections = input_data.split('\n\n')
+for line in sys.stdin:
+    line = line.rstrip()
+    if not line:
+        continue
+    if line.startswith("seeds:"):
+        lst = [int(x) for x in line.split(': ')[1].split()]
+        seeds = list(zip(lst[::2], lst[1::2]))
+        
+    elif line.endswith(":"):
+        stage = line.split('-to-')[0]
+        order.append(stage)
+    else:
+        dst, src, l = map(int, line.split())
+        all_rules[stage].append((src, l, dst - src))
 
-seed, *other_sections = sections
-seed = [int(x) for x in seed.split(':')[-1].split()]
 
-class Function:
-    def __init__(self, section_str):
-        lines = section_str.split('\n')[1:]
-        self.tuples = [[int(x) for x in line.split()] for line in lines]
+def process_rules(ranges, rules):
+    next_ranges = []
+    for range_start, range_len in ranges:
+        for rule_start, rule_len, rule_diff in rules:
+            if range_start < rule_start < range_start + range_len:
+                t = rule_start - range_start
+                ranges.append((range_start, t))
+                range_start += t
+                range_len -= t
+            if range_start <= rule_start + rule_len - 1 < range_start + range_len - 1:
+                t = range_start + range_len - (rule_start + rule_len)
+                ranges.append((rule_start + rule_len, t))
+                range_len -= t
+            if rule_start <= range_start < rule_start + rule_len:
+                next_ranges.append((range_start + rule_diff, range_len))
+                break
+        else:
+            next_ranges.append((range_start, range_len))
+    return next_ranges
 
-    def apply_range(self, range_list):
-        new_ranges = []
-        for (dest, src, sz) in self.tuples:
-            src_end = src + sz
-            next_ranges = []
-            while range_list:
-                (st, ed) = range_list.pop()
-                before = (st, min(ed, src))
-                inter = (max(st, src), min(src_end, ed))
-                after = (max(src_end, st), ed)
-                if before[1] > before[0]:
-                    next_ranges.append(before)
-                if inter[1] > inter[0]:
-                    new_ranges.append((inter[0] - src + dest, inter[1] - src + dest))
-                if after[1] > after[0]:
-                    next_ranges.append(after)
-            range_list = next_ranges
-        return new_ranges + range_list
-
-functions = [Function(section) for section in other_sections]
-
-result = []
-pairs = list(zip(seed[::2], seed[1::2]))
-for start, size in pairs:
-    current_range = [(start, start + size)]
-    for func in functions:
-        current_range = func.apply_range(current_range)
-    result.append(min(current_range)[0])
-print(min(result))
+        
+ranges = seeds[:]
+for stage in order:
+    ranges = process_rules(ranges, all_rules[stage])
+print(min(ranges)[0])
