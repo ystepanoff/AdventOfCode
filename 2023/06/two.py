@@ -12,7 +12,7 @@ print(j_right - j_left)
 
 # (time - j) * j > dist
 # j^2 - time * j + dist < 0
-# (j - time / 2)^2 + dist - (time^2 / 4( < 0
+# (j - time / 2)^2 + dist - (time^2 / 4) < 0
 # (j - time / 2)^2 < (time^2 / 4) - dist
 # -sqrt((time^2 / 4) - dist) < j - time / 2 < sqrt((time^2 / 4) - dist)
 # (time / 2) - sqrt((time^2 / 4) - dist) < j < (time / 2) + sqrt((time^2 / 4) - dist)
