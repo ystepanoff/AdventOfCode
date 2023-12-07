@@ -35,6 +35,7 @@ def best_hand_type(hand):
         best = min(best, hand_type(new_hand))
     return best
 
+
 def compare_hands(hand_a, hand_b):
     hand_a = hand_a[0]
     hand_b = hand_b[0]
