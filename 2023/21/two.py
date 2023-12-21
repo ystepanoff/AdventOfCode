@@ -31,8 +31,8 @@ def bruteforce(steps):
 
 
 def fit_quadratic(xs, ys):
-    a = (ys[-1] - 2*ys[-2] + ys[-3]) / (xs[-1]**2 - 2*xs[-2]**2 + xs[-3]**2)
-    b = (ys[-1] - ys[-2] - a * xs[-1] ** 2 + a * xs[-2]**2) / (xs[-1] - xs[-2])
+    a = (ys[-1] - 2 * ys[-2] + ys[-3]) / (xs[-1] ** 2 - 2 * xs[-2] ** 2 + xs[-3] ** 2)
+    b = (ys[-1] - ys[-2] - a * xs[-1] ** 2 + a * xs[-2] ** 2) / (xs[-1] - xs[-2])
     c = ys[-1] - a * xs[-1] ** 2 - b * xs[-1]
     return a, b, c
 
