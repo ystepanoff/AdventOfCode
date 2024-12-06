@@ -24,7 +24,7 @@ G = {
 start = list(G.keys())[list(G.values()).index('^')]
 
 total = 0
-for x, y in G.items():
+for x in G:
     if G[x] == '.':
         G[x] = '#'
         if loop(G, start):

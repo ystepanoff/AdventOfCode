@@ -20,6 +20,4 @@ G = {
     for j, ch in enumerate(line.rstrip())
 }
 start = list(G.keys())[list(G.values()).index('^')]
-
-
 print(count(G, start))
