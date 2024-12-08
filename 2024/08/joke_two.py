@@ -1,0 +1,1 @@
+import sys;from itertools import*;a=[l.rstrip()for l in sys.stdin];m,n=len(a),max(len(l)for l in a);print(len({p for c in set("".join(a))-{'.'}for x,y in combinations([(i,j)for i,r in enumerate(a)for j,k in enumerate(r)if k==c],2)for k in range(max(m,n))for p in[(x[0]-k*(y[0]-x[0]),x[1]-k*(y[1]-x[1])),(y[0]+k*(y[0]-x[0]),y[1]+k*(y[1]-x[1]))]if 0<=p[0]<m and 0<=p[1]<n}))
