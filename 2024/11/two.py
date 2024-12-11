@@ -1,10 +1,11 @@
-from collections import Counter
+from collections import defaultdict
 
 
 def count(st):
-    s = Counter({st: 1})
+    s = defaultdict(int)
+    s[st] = 1
     for _ in range(75):
-        new_s = Counter()
+        new_s = defaultdict(int)
         for stone, cnt in s.items():
             str_stone = str(stone)
             l = len(str_stone)
