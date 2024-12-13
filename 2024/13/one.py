@@ -3,15 +3,12 @@ import sys
 
 
 def solve(ax, ay, bx, by, x, y):
-    best = -1
-    for a in range(101):
-        for b in range(101):
-            cost = 3 * a + b
-            X = ax * a + bx * b
-            Y = ay * a + by * b
-            if X == x and Y == y and (best == -1 or cost < best):
-                best = cost
-    return max(0, best)
+    d = ax * by - ay * bx
+    dx = x * by - y * bx
+    dy = ax * y - ay * x
+    if dx % d == 0 and dy % d == 0:
+        return (dx // d) * 3 + (dy // d)
+    return 0
 
 
 total = 0
