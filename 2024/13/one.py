@@ -14,7 +14,7 @@ def solve(ax, ay, bx, by, x, y):
 total = 0
 for line in sys.stdin:
     line = line.rstrip()
-    match = re.search(r"Button A: X\+(\d+), Y\+(\d+)", line)
+    match = re.match(r"Button A: X\+(\d+), Y\+(\d+)", line)
     if match:
         ax = int(match.group(1))
         ay = int(match.group(2))
