@@ -12,7 +12,7 @@ end = list(G.keys())[list(G.values()).index('E')]
 
 dists = [1j, 1, -1j, -1]
 q = []
-heappush(q,(0, int(start.real), int(start.imag), 0))
+heappush(q, (0, int(start.real), int(start.imag), 0))
 ds = {}
 best = -1
 while q:
@@ -32,7 +32,7 @@ while q:
 
 q = []
 for d in range(4):
-    heappush(q,(0, int(end.real), int(end.imag), d))
+    heappush(q, (0, int(end.real), int(end.imag), d))
 de = {}
 while q:
     dst, x, y, d = heappop(q)
