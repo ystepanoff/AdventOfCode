@@ -2,30 +2,29 @@ A, B, C = (int(input().split()[-1]) for _ in range(3))
 input()
 p = [int(x) for x in input().split()[-1].split(',')]
 
-# program: 2,4, 1,1, 7,5, 0,3, 1,4, 4,0, 5,5, 3,0
-# B = A % 8
-# B = B ^ 1
-# C = A >> B
-# A = A >> 3
-# B = B ^ 4
-# B = B ^ C
-# out.append(B % 8)
-# start over if A is not 0
 
-# quick and cheeky z3 solution
-from z3 import Optimize, BitVec
-o = Optimize()
-a = BitVec('A', 64)
-A = a
-for x in p:
-    B = A % 8
-    B = B ^ 1
-    C = A >> B
-    A = A >> 3
-    B = B ^ 4
-    B = B ^ C
-    o.add((B % 8) == x)
-o.add(A == 0)
-o.minimize(a)
-if str(o.check()) == "sat":
-    print(o.model())
+def run(A, B, C, p):
+    out = []
+    i = 0
+    while i < len(p):
+        combo = "0123ABC-"[p[i + 1]]
+        combo = int(combo) if combo.isdigit() else locals()[combo]
+        match p[i]:
+            case 0: A >>= combo
+            case 1: B ^= p[i + 1]
+            case 2: B = combo & 7
+            case 3: i = p[i + 1] - 2 if A else i
+            case 4: B ^= C
+            case 5: out.append(combo & 7)
+            case 6: B = A >> combo
+            case 7: C = A >> combo
+        i += 2
+    return out
+
+
+def find(idx, a):
+    return (print(a) or True) if idx < 0 else \
+        any(run((a << 3) | d, B, C, p)[0] == p[idx] and find(idx - 1, (a << 3) | d) for d in range(8))
+
+
+find(len(p) - 1, 0)
