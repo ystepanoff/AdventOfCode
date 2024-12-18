@@ -17,8 +17,10 @@ def bfs():
 	return 70 + 70j in dist
 
 
-for v in inp:
-	G.discard(v)
-	if not bfs():
-		print(f"{int(v.imag)},{int(v.real)}")
-		break
+grid = G.copy()
+l, r = -1, len(inp)
+while r - l > 1:
+	m = (l + r) >> 1
+	G = grid - set(inp[:m + 1])
+	l, r = (m, r) if bfs() else (l, m)
+print(f"{int(inp[r].imag)},{int(inp[r].real)}")
