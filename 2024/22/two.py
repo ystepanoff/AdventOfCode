@@ -3,9 +3,9 @@ from collections import defaultdict
 
 
 def gen(n):
-    m = ((n << 6) ^ n) & 0xFFFFFF
-    m = ((m >> 5) ^ m) & 0xFFFFFF
-    return ((m << 11) ^ m) & 0xFFFFFF
+    m = ((n << 6) ^ n) & 0xffffff
+    m = ((m >> 5) ^ m) & 0xffffff
+    return ((m << 11) ^ m) & 0xffffff
 
 
 total = defaultdict(int)
