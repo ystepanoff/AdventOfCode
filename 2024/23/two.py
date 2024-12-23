@@ -5,8 +5,7 @@ from collections import defaultdict
 def bk(curr, cand, out):
     if not cand and not out:
         yield curr
-    while cand:
-        v = cand.pop()
+    while cand and (v := cand.pop()):
         yield from bk(curr | {v}, cand & G[v], out & G[v])
         out.add(v)
 
