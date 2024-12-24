@@ -30,9 +30,9 @@ def process(w):
 
 adders = []
 for i in range(1000):
-    z = f"z{i:02}"
-    if z not in r:
+    if f"z{i:02}" not in r:
         break
+    z = f"z{i:02}"
     ADDER = []
     process(z)
     adders.append(ADDER)
