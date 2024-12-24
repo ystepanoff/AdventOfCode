@@ -1,8 +1,7 @@
 import sys
 
 
-r = {}
-last, state = "z00", 0
+r, state = {}, 0
 for line in sys.stdin:
     line = line.rstrip()
     if not line:
@@ -41,7 +40,7 @@ for i in range(1000):
 bad = set()
 for adder in adders[2:]:
     for a, b, op, c in adder:
-        if c[0] == 'z' and op != "XOR" and c != last:
+        if c[0] == 'z' and op != "XOR" and c != z:
             bad.add(c)
         elif c[0] != 'z' and op == "XOR" and all(w[0] not in "xyz" for w in (a, b)):
             bad.add(c)
