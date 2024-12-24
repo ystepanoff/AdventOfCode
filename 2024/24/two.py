@@ -11,8 +11,6 @@ for line in sys.stdin:
     if state:
         a, op, b, _, c = line.split()
         r[c] = (a, b, op)
-        if c[0] == "z" and int(c[1:]) > int(last[1:]):
-            last = c
 
 
 SEEN = set()
