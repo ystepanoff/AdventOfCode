@@ -1,3 +1,3 @@
 # AdventOfCode
 
-![AoC 2023](https://github.com/ystepanoff/AdventOfCode/blob/main/2023/2023.png?raw=true)
+![AoC 2023](https://github.com/ystepanoff/AdventOfCode/blob/main/2024/2024.png?raw=true)
